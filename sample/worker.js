@@ -20,7 +20,7 @@ class Worker extends SCWorker {
       // available formats.
       app.use(morgan('dev'));
     }
-    app.use(serveStatic(path.resolve(__dirname, 'public')));
+    // app.use(serveStatic(path.resolve(__dirname, 'public')));
 
     // Add GET /health-check express route
     healthChecker.attach(this, app);
@@ -34,24 +34,6 @@ class Worker extends SCWorker {
     */
     scServer.on('connection', function (socket) {
 
-      // Some sample logic to show how to handle client events,
-      // replace this with your own logic
-
-      socket.on('sampleClientEvent', function (data) {
-        count++;
-        console.log('Handled sampleClientEvent', data);
-        scServer.exchange.publish('sample', count);
-      });
-
-      var interval = setInterval(function () {
-        socket.emit('random', {
-          number: Math.floor(Math.random() * 5)
-        });
-      }, 1000);
-
-      socket.on('disconnect', function () {
-        clearInterval(interval);
-      });
     });
   }
 }
